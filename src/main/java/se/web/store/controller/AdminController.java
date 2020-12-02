@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.web.store.dao.AdminUserDAO;
+import se.web.store.dto.AdminUserDTO;
 import se.web.store.entity.AdminUser;
 import se.web.store.security.PasswordGenerator;
 import se.web.store.service.MyConversionService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,25 +42,35 @@ public class AdminController {
     /** ADMIN-USER - ADD NEW USER FORM (admin-user-form.html)**/
     @GetMapping("addadminuser")
     public String addAdminUser(Model model) {
-        AdminUser adminUser = new AdminUser();
-        model.addAttribute("saveAdminUser", adminUser);
+
+        AdminUserDTO dto = new AdminUserDTO();
+        //AdminUser adminUser = new AdminUser();
+        model.addAttribute("saveAdminUser", dto);
 
         return "admin/admin-user-form.html";
     }
 
     @PostMapping("addadminuser/save")
-    public String saveAdminUser(@ModelAttribute("saveAdminUser") AdminUser adminUser ) {
-        // Get raw password and crypt
-        String cryptPassword = generator.passwordGenerator(adminUser.getPassword());
+    public String saveAdminUser(@Valid @ModelAttribute("saveAdminUser") AdminUserDTO dto, BindingResult errors ) {
 
-        AdminUser newAdminUser = new AdminUser(
-                adminUser.getUsername(),
+        // If any errors found
+        if ( errors.hasErrors() ) {
+            return "admin/admin-user-form.html";
+        }
+
+        // Get raw password and crypt
+        String cryptPassword =
+                generator.passwordGenerator(dto.getPassword());
+
+        // Create new user from DTO
+        AdminUser adminUser = new AdminUser(
+                dto.getUsername(),
                 cryptPassword,
-                adminUser.getRole(),
+                dto.getRole(),
                 true
         );
 
-        adminUserDAO.save(newAdminUser);
+        adminUserDAO.save(adminUser);
 
         return "redirect:/admin/adminuserlist";
     }

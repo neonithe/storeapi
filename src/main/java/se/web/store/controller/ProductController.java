@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import se.web.store.dao.ProductDAO;
+import se.web.store.dto.ProductDTO;
 import se.web.store.entity.Product;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,6 +28,75 @@ public class ProductController {
     @Autowired
     ProductDAO productDAO;
 
+    /** DTO -------------------- **/
+
+    /** Save product **/
+    @GetMapping("admin/add/product")
+    public String addProduct(Model model) {
+        ProductDTO dto = new ProductDTO();
+        //Product product = new Product();
+        model.addAttribute("saveProduct", dto);
+        model.addAttribute("image", "/resources/images/default/empty.png");
+
+        return "admin/admin-product-form.html";
+    }
+
+    @PostMapping("admin/add/product/save")
+    public String saveProduct(
+            @Valid @ModelAttribute("saveProduct") ProductDTO dto, BindingResult errors,
+            @RequestParam("fileImage") MultipartFile file ) throws IOException {
+
+        // If any errors found
+        if ( errors.hasErrors() ) {
+            return "admin/admin-product-form.html";
+        }
+
+        if ( dto.getImage().isEmpty() ) {
+            dto.setImage("/resources/images/default/empty.png");
+        }
+
+        // Create new product - add the information from form
+        Product product =
+                new Product(
+                        dto.getTitle(),
+                        dto.getDescription(),
+                        dto.getImage(),
+                        dto.getPrice(),
+                        dto.getQuantity());
+
+        if ( file.isEmpty() ) {
+
+        }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        product.setImage(fileName);
+        Product saveProduct = productDAO.save(product);
+
+        String uploadDir = "./resources/images/" + saveProduct.getProductId();
+        Path uploadPath = Paths.get(uploadDir);
+
+
+        if ( !Files.exists(uploadPath) ) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try ( InputStream inputStream = file.getInputStream() ) {
+            Path filePath = uploadPath.resolve(fileName);
+
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (IOException e) {
+            throw new IOException("Could not save uploaded file: " + fileName);
+        }
+
+        saveProduct.setImage(saveProduct.getImagePath());
+        productDAO.save(saveProduct);
+
+        return "redirect:/admin";
+    }
+
+
+    /** DTO END -------------------- **/
+
     /** ADMIN - List products **/
     @GetMapping("admin/products")
     public String getProductList(Model model) {
@@ -34,11 +106,12 @@ public class ProductController {
         return "admin/admin-product-list.html";
     }
 
-    /** ADMIN - Add product **/
+
+
+    /** ADMIN - Add product
     @GetMapping("admin/add/product")
     public String addProduct(Model model) {
         Product product = new Product();
-        String text = "/resources/images/1/java-icon.png";
         model.addAttribute("saveProduct", product);
         model.addAttribute("image", "/resources/images/default/empty.png");
 
@@ -78,7 +151,7 @@ public class ProductController {
         productDAO.save(saveProduct);
 
         return "redirect:/admin";
-    }
+    }**/
 
     /** ADMIN - Update product **/
     @PostMapping("admin/product/update")

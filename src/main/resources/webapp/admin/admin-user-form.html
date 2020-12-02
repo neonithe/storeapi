@@ -24,13 +24,32 @@
 
                 <!-- Product name -->
                 <input class="form-control mb-0 col-12"
-                       type="text" id="name" placeholder="Username ( email )"
+                       type="text" id="username" placeholder="Username ( email )"
                        th:field="*{username}"/>
+
+                <!-- Error Name -->
+                <div th:if="${#fields.hasErrors('username')}">
+                    <ul class="list-group list-group-flush" >
+
+                        <li class="list-group-item list-group-item-danger"
+                            th:each="err: ${#fields.errors('username')}"><span th:text="${err}"></span>
+                        </li>
+                    </ul>
+                </div>
                 <br>
 
                 <input class="form-control mb-0 col-12"
                        type="password" id="password" placeholder="Password"
                        th:field="*{password}"/>
+                <!-- Error Name -->
+                <div th:if="${#fields.hasErrors('password')}">
+                    <ul class="list-group list-group-flush" >
+
+                        <li class="list-group-item list-group-item-danger"
+                            th:each="err: ${#fields.errors('password')}"><span th:text="${err}"></span>
+                        </li>
+                    </ul>
+                </div>
                 <br>
                 <div class="row">
                     <div class="col-4">
