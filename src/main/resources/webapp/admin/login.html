@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+
+<div th:replace="templates/head :: header"></div>
+
+<title>Login to admin</title>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace = "/templates/navbar.html :: navigation" ></nav>
+<br>
+
+<!-- CONTENT BEGIN-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <br>
+            <h3>Login to admin</h3>
+            <hr>
+            <form th:action="@{/login}" method="POST" >
+
+                <input class="form-control mb-0 col-12" type="email" name="email"
+                       placeholder="Email" required style="width: 50%"/>
+                <br>
+                <input class="form-control mb-0 col-12" type="password" name="password"
+                       placeholder="Password" required style="width: 50%"/>
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="remember-me">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Remember me on this computer
+                    </label>
+                </div>
+                <br>
+                <button class="btn btn-outline-success btn-sm mb-0 mr-3" type="submit" style="width: 50%">Login to admin</button>
+                <br>
+            </form>
+            <br>
+        </div>
+        <div>
+            <div class="col-16">
+                <br>
+                <h3>Info</h3>
+                <hr>
+                <p>This is login form for admin.</p>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTENT END -->
+
+
+<!-- Footer -->
+<footer th:replace = "/templates/footer.html :: footer"></footer>
+</body>
+</html>

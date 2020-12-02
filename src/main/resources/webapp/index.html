@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <div th:replace="templates/head :: header"></div>
+    <title>StartPage</title>
+</head>
+<body>
+<!-- Navigation -->
+<nav th:replace = "/templates/navbar.html :: navigation" ></nav>
+<br>
+
+<!-- CONTENT BEGIN-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div>
+                <h3>Welcome</h3>
+                <hr>
+                <p>To change any values please login to backend</p>
+            </div>
+        <div>
+
+        </div>
+        </div>
+        <div class="col-6">
+            <div>
+                <h3>Login</h3>
+                <hr>
+                <a class="btn btn-outline-info btn-sm mb-0 mr-3" th:href="@{/admin}">Login to admin</a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+
+<!-- CONTENT END -->
+
+<!-- Footer -->
+<footer th:replace = "/templates/footer.html :: footer"></footer>
+</body>
+</html>

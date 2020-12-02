@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+                xmlns:sec="https://www.thymeLeaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="templates/head :: header"></div>
+
+    <title>Footer</title>
+
+</head>
+<body>
+
+<footer th:fragment="footer">
+    <div class="mt-2 pt-3 pb-3 bg-dark shadow-lg p-3 mb-5 bg-dark rounded-top rounded-5" >
+        <div class="container">
+            <div class="row">
+
+                <!-- MENU -->
+                <div class="col-lg-4 col-xs-8 text-light">
+                    <b>Menu</b>
+                    <ul>
+                        <li><a class="text-white" th:href="@{/}">Home</a></li>
+                    </ul>
+                </div>
+                <!-- MENU -->
+
+                <div class="col-lg-4 col-xs-12 text-light">
+                    <b>Contact</b>
+                    <p>Contact us: ma@ma.com</p>
+                </div>
+                <div class="col-lg-4 col-xs-12 text-light">
+                    <b>Copyright 2020</b>
+
+                </div>
+            </div>
+        </div>
+</body>
+</html>

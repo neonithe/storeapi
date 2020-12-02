@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+
+<div th:replace="templates/head :: header"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<title>Start Page</title>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace = "/templates/navbar.html :: navigation" ></nav>
+<br>
+
+<!-- CONTENT BEGIN-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h3>Add product</h3>
+            <hr>
+
+            <form th:action="@{ /product/admin/add/product/save }"
+                  method="POST" th:object="${saveProduct}" enctype="multipart/form-data">
+
+                <!-- Product name -->
+                <input class="form-control mb-0 col-12"
+                       type="text" id="name" placeholder="Product Name"
+                       th:field="*{title}">
+                <br>
+
+                <textarea class="form-control mb-0 col-12"
+                          type="textarea" id="description" placeholder="Description"
+                          th:field="*{description}"></textarea>
+                <br>
+                <div class="row">
+                    <div class="col-2">
+                        <label>Price</label>
+                        <input class="form-control mb-0 col-12" style="width: 80px"
+                               type="number" id="price" placeholder="Price"
+                               th:field="*{price}">
+                    </div>
+                    <div class="col-10">
+                        <label>Stock</label>
+                        <input class="form-control mb-0 col-12" style="width: 80px"
+                               type="number" id="stock" placeholder="Stock"
+                               th:field="*{quantity}">
+                    </div>
+                </div>
+                <br>
+            <br>
+        </div>
+        <div>
+            <div class="col-16">
+                <h3>Save and Image</h3>
+                <hr>
+                <button class="btn btn-outline-success btn-sm mb-0 mr-2" type="submit">Save product</button>
+                <button class="btn btn-outline-info btn-sm mb-0 mr-2" type="reset">Clear</button>
+                <a th:href="@{/product/admin/products}" class="btn btn-outline-dark btn-sm mb-3 mr-2 float-right my-auto">Back</a>
+                <hr>
+                <p>Upload image</p>
+                <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg"/>
+                <hr>
+                    <img class="margin-left: auto; margin-right: auto;"
+                         id="thumbnail" alt="Image Preview" style="width: 150px; height: 150px"
+                         th:src="${ image }"/>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<br>
+<!-- CONTENT END -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#fileImage').change(function () {
+            showImageThumbnail(this);
+        });
+    });
+
+    function showImageThumbnail(fileInput) {
+        file = fileInput.files[0];
+        reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#thumbnail').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+<!-- Footer -->
+<footer th:replace = "/templates/footer.html :: footer"></footer>
+</body>
+</html>

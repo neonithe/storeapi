@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+      xmlns:sec="https://www.thymeLeaf.org/thymeleaf-extras-springsecurity5">
+
+<div th:replace="templates/head :: header"></div>
+    <title>Admin</title>
+</head>
+<body>
+<!-- Navigation -->
+<nav th:replace = "/templates/navbar.html :: navigation" ></nav>
+<br>
+
+<!-- CONTENT BEGIN-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card bg-light mb-3 align-middle float-right" style="max-width: 18rem;">
+                <div class="card-header"><b>ADMIN USER</b></div>
+                <div class="card-body">
+                    <a class="btn btn-outline-info btn-sm mb-0 mr-3"
+                       th:href="@{/admin/adminuserlist}" style="width: 250px">Admin user list</a>
+                    <br>
+                    <br>
+                    <a class="btn btn-outline-info btn-sm mb-0 mr-3"
+                       th:href="@{/admin/addadminuser}" style="width: 250px">Add user</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card bg-light mb-3 align-middle" style="max-width: 18rem;">
+                <div class="card-header"><b>PRODUCT MANAGEMENT</b></div>
+                <div class="card-body">
+                    <a class="btn btn-outline-info btn-sm mb-0 mr-3" th:href="@{/product/admin/products}" style="width: 250px">Product list</a>
+                    <br>
+                    <br>
+                    <a class="btn btn-outline-info btn-sm mb-0 mr-3" th:href="@{/product/admin/add/product}" style="width: 250px">Add product</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTENT END -->
+
+<!-- Footer -->
+<footer th:replace = "/templates/footer.html :: footer"></footer>
+</body>
+</html>

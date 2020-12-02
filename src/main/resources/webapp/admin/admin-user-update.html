@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+
+<div th:replace="templates/head :: header"></div>
+
+<title>Start Page</title>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace = "/templates/navbar.html :: navigation" ></nav>
+<br>
+
+<!-- CONTENT BEGIN-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h3>Add admin user</h3>
+            <hr>
+
+            <form th:action="@{ /admin/adminuser/update/save }" method="POST" th:object="${adminUserUpdate}">
+
+                <input type="hidden" th:field="*{adminId}"/>
+
+                <!-- Product name -->
+                <input class="form-control mb-0 col-12"
+                       type="text" id="name" placeholder="Username ( email )"
+                       th:field="*{username}"/>
+                <br>
+
+                <input class="form-control mb-0 col-12"
+                       type="password" id="password" placeholder="Password"
+                       th:field="*{password}"/>
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="radio" id="role_admin" name="role" value="ROLE_ADMIN" th:field="*{role}">
+                        <label for="role_admin">Admin</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="radio" id="role_user" name="role" value="ROLE_USER" th:field="*{role}">
+                        <label for="role_user">User</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="radio" id="role_edit" name="role" value="ROLE_EDIT" th:field="*{role}">
+                        <label for="role_edit">Edit</label>
+                    </div>
+                </div>
+                <hr>
+                <button class="btn btn-outline-success btn-sm mb-0 mr-3 float-right" type="submit">Save admin user</button>
+            </form>
+        </div>
+        <div>
+            <div class="col-16">
+                <h3>Info</h3>
+                <hr>
+                <a class="btn btn-outline-dark btn-sm mb-0 mr-3" th:href="@{/admin/adminuserlist}" style="width: 250px">Back to admin list</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- CONTENT END -->
+
+<!-- Footer -->
+<footer th:replace = "/templates/footer.html :: footer"></footer>
+</body>
+</html>

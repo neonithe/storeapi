@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+                xmlns:sec="https://www.thymeLeaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="templates/head :: header"></div>
+    <title>Navigation</title>
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav th:fragment="navigation" class="navbar navbar-light bg-dark rounded-bottom">
+
+    <div class="navbar-brand">
+        <a class="text-white" href="https://www.thymeleaf.org/" target="_blank">Backend - webshop</a>
+    </div>
+
+    <ul class="nav">
+        <li><a class="btn btn-outline-info btn-sm mb-0 mr-3" th:href="@{/}">Home</a></li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form name="logoutForm" th:action="@{/logout}" method="POST" >
+                    <button class="btn btn-outline-danger btn-sm mb-0 mr-3"
+                            type="submit" value="logout">Logout Admin</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>
